@@ -3,6 +3,7 @@
 $(() => {
 
 var delay = 0;
+var currentChallenge = 0;
 
 var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
   mode: 'htmlmixed',
@@ -22,6 +23,12 @@ editor.on("change", function() {
   clearTimeout(delay);
   delay = setTimeout(updatePreview, 300);
 });
+
+
+
+function constructPage(challengeNumber) {
+
+}
 
 initEditor();
 //setTimeout(updatePreview, 300);

@@ -43,7 +43,7 @@ h2 {
   margin-top: 0;
 }
 
-button {
+.btn {
   border-radius: 10px;
   margin-top: 25px;
   height: 75px;
@@ -55,7 +55,7 @@ button {
   transition: background-color 0.2s;
 }
 
-button:hover {
+.btn:hover {
   cursor: pointer;
   background-color: #024e02;
 }
@@ -128,4 +128,33 @@ button:hover {
 #preview {
   flex-grow: 1;
   border: 1px solid gray;
+}
+
+.next-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  padding-left: 20px;
+  padding-right: 40px;
+}
+
+.fa-arrow-right {
+  position: relative;
+  left: 30px;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(0);
+  }
+  40% {
+    transform: translateX(-30px);
+  }
+  60% {
+    transform: translateX(-15px);
+  }
+}
+
+.bounce {
+  animation: bounce 2s infinite;
 }
