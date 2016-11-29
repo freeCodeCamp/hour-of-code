@@ -7,6 +7,7 @@
   <title>Hour of Code by Free Code Camp</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="vendor/lib/codemirror.css">
   <link rel="stylesheet" href="vendor/theme/mdn-like.css">
   <link rel="stylesheet" href="stylesheet.css">
@@ -15,13 +16,20 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
+  <!-- CDN Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.2/lodash.min.js"></script>
+
+  <!-- Internal libaries -->
   <script src="vendor/lib/codemirror.js"></script>
   <script src="vendor/mode/xml/xml.js"></script>
   <script src="vendor/mode/javascript/javascript.js"></script>
   <script src="vendor/mode/css/css.js"></script>
   <script src="vendor/mode/htmlmixed/htmlmixed.js"></script>
+  
+  <!-- Page scripts -->
   <script src="codemirror-update.js"></script>
   <script src="challenges.js"></script>
+
 </head>
 
 <body>
@@ -35,18 +43,8 @@
   <div class="container">
 
     <div class="left">
-      <h2>#1 Welcome to "Hour of Code"!</h2>
-      <p class="instructions">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur lacinia eu lectus ut dictum. Etiam congue eu libero non laoreet.
-      </p>
-      <pre class="codeblock">
-        Hello World!
-        teststest
-        test
-      </pre>
-      <p class="instructions">
-        Pellentesque id tempor nunc, vel feugiat ligula. Morbi aliquam, ipsum vitae vestibulum tempor, ligula arcu fermentum ipsum, fringilla euismod libero nunc eget enim.
-      </p>
+      <h2 id="title"></h2>
+      <div class="instructions" id="instructions"></div>
 
       <hr>
       <textarea id="code" name="code"></textarea>
@@ -55,9 +53,12 @@
     <div class="right">
       <h2>Preview</h2>
       <iframe id=preview></iframe>
-      <button>Check</button>
+      <button class="btn">Check</button>
     </div>
 
   </div>
+  
+  <button id="next-button" class="btn">Next Challenge <i class="fa fa-arrow-right bounce"></i></button>
+  
 </body>
 </html>
