@@ -104,7 +104,7 @@ button:hover {
 .codeblock {
   font-family: "Ubuntu Mono";
   background-color: #f5f5f5;
-  border-radius 10px;
+  border-radius: 10px;
   padding: 10px;
   color: #492c14;
 }
