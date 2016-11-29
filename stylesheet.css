@@ -107,6 +107,7 @@ button:hover {
   border-radius: 10px;
   padding: 10px;
   color: #492c14;
+  white-space: pre-line;
 }
 
 .CodeMirror pre {
