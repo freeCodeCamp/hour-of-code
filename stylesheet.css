@@ -130,7 +130,7 @@ h2 {
   border: 1px solid gray;
 }
 
-.next-button {
+#next-button {
   position: absolute;
   bottom: 20px;
   right: 20px;
@@ -157,4 +157,10 @@ h2 {
 
 .bounce {
   animation: bounce 2s infinite;
+}
+
+.inline-code {
+  padding: 6px;
+  background-color: hsla(0, 0%, 0%, 0.07);
+  border-radius: 3px;
 }

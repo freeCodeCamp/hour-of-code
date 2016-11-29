@@ -3,7 +3,12 @@
 $(() => {
 
 var delay = 0;
-var currentChallenge = 0;
+
+var currentChallenge = 1;
+
+var title = document.getElementById('title');
+var instructions = document.getElementById('instructions');
+var nextChallenge = document.getElementById('next-button');
 
 var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
   mode: 'htmlmixed',
@@ -24,41 +29,46 @@ editor.on("change", function() {
   delay = setTimeout(updatePreview, 300);
 });
 
-
-
-function constructPage(challengeNumber) {
-
+nextChallenge.onclick = function() {
+  currentChallenge++;
+  constructPage(currentChallenge);
 }
 
-initEditor();
-//setTimeout(updatePreview, 300);
+constructPage(currentChallenge);
 
-function initEditor() {
-  initialValue = `
-<html>
-<head>
-<meta charset=utf-8>
-<title>HTML5 canvas demo</title>
-<style>p {font-family: monospace;}</style>
-</head>
-<body>
-<p>Canvas pane goes here:</p>
-<canvas id=pane width=300 height=200></canvas>
-<script type="text/javascript">
-var canvas = document.getElementById('pane');
-var context = canvas.getContext('2d');
-context.fillStyle = 'rgb(250,0,0)';
-context.fillRect(10, 10, 55, 50);
-context.fillStyle = 'rgba(0, 0, 250, 0.5)';
-context.fillRect(30, 30, 55, 50);
-</script>
-</body>
-</html>
-  `;
-  initialValue.trim();
-  editor.setValue(initialValue);
-  editor.markText({line: 0}, {line: 11}, {inclusiveRight: true, inclusiveLeft: true, collapsed: true});
-  editor.markText({line: 16}, {line: 21}, {inclusiveRight: true, inclusiveLeft: true, collapsed: true});
+function constructPage(challengeNumber) {
+  var challenge = _.find(challenges, c => c.number === challengeNumber);
+  setupEditor(challenge);
+  setupText(challenge);
+}
+
+function setupEditor(challenge) {
+  var editorVal = '';
+  for (var i = 0; i < challenge.seedCode.length; i++) {
+    if (i === 0) editorVal += challenge.seedCode[i];
+    else editorVal += `\n${challenge.seedCode[i]}`;
+  }
+  editor.setValue(editorVal);
+  //editor.markText({line: 0}, {line: 1}, {inclusiveRight: true, inclusiveLeft: true, collapsed: true});
+  //editor.markText({line: 16}, {line: 21}, {inclusiveRight: true, inclusiveLeft: true, collapsed: true});
+}
+
+/**
+ * Set up instructions for current challange
+ */
+function setupText(challenge) {
+  title.innerText = challenge.name;
+
+  // Clear old instructions
+  while(instructions.firstChild) {
+    instructions.removeChild(instructions.firstChild);
+  }
+  
+  for (var i = 0; i < challenge.instructions.length; i++) {
+    var p = document.createElement("p");
+    p.innerHTML = challenge.instructions[i];
+    instructions.appendChild(p);
+  }
 }
 
 });
