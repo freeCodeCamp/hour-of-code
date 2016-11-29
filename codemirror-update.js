@@ -3,7 +3,7 @@
 $(() => {
 
 var delay = 0;
-// Initialize CodeMirror editor with a nice html5 canvas demo.
+
 var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
   mode: 'htmlmixed',
   lineNumbers: true,
@@ -37,7 +37,7 @@ function initEditor() {
   <body>
     <p>Canvas pane goes here:</p>
     <canvas id=pane width=300 height=200></canvas>
-    <script>
+    <script type="text/javascript">
       var canvas = document.getElementById('pane');
       var context = canvas.getContext('2d');
       context.fillStyle = 'rgb(250,0,0)';
