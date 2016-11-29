@@ -120,7 +120,7 @@ h2 {
 
 .right {
   flex-grow: 1;
-  height: 80%;
+  height: 500px;
   display: flex;
   flex-direction: column;
 }
