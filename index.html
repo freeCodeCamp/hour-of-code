@@ -18,6 +18,7 @@
 	<script src="vendor/mode/xml/xml.js"></script>
 	<script src="codemirror-update.js"></script>
 	<script src="challenges.js"></script>
+	<script src="script.js"></script>
 </head>
 
 <body>
@@ -52,16 +53,6 @@ test</pre>
   <body>
     <p>Canvas pane goes here:</p>
     <canvas id=pane width=300 height=200></canvas>
-    <script>
-      var canvas = document.getElementById('pane');
-      var context = canvas.getContext('2d');
-
-      context.fillStyle = 'rgb(250,0,0)';
-      context.fillRect(10, 10, 55, 50);
-
-      context.fillStyle = 'rgba(0, 0, 250, 0.5)';
-      context.fillRect(30, 30, 55, 50);
-    </script>
   </body>
 </html>
     </textarea>
