@@ -27,7 +27,6 @@ const challenges = [
         {start: -1, end: 6}, {start: 8, end: 12}
       ]
     },
-    // array of functions to test the challenge?
     tests: [
       {
         test: "$('#preview').contents().find('#img-cont')[0].src.match('monkey') || $('#preview').contents().find('#img-cont')[0].src.match('horse') || $('#preview').contents().find('#img-cont')[0].src.match('tiger')",
@@ -45,29 +44,41 @@ const challenges = [
   },
   {
     number: 1,
-    name: "#1 Welcome to 'Hour of Code'!",
+    name: "#1 Making Friends",
     instructions: [
-      "First part of instructions for first challenge",
-      "Second part of instructions with code: <span class='inline-code'>console.log('awesome')</span>",
-      "Final set of instructions for this challenge"
+      () => `Your ${animal} must be a bit lonely here! You can create more ${animal}s quickly by running a loop. This loop makes 5 animals.`,
+      "<pre class='codeblock'>var num = 1;\n\nwhile (num <= 5) {\n   createAnimal('animal');\n   num = num + 1; \n}</pre>",
+      "Try playing around with <span class='inline-code'>num = 1</span> and <span class='inline-code'>num <= 5</span>!"
     ],
     seed: {
       code: [
-        "<canvas id=pane width=300 height=200></canvas>",
+        () => `<body class='${color}' style="padding:50px;"><link rel='stylesheet' href='preview-style.css'>`,
+        "<style>img { width: 33%; margin: auto; }</style>",
         "<script type='text/javascript'>",
-        "var canvas = document.getElementById('pane');",
-        "var context = canvas.getContext('2d');",
-        "context.fillStyle = 'rgb(250,0,0)';",
-        "context.fillRect(10, 10, 55, 50);",
-        "context.fillStyle = 'rgba(0, 0, 250, 0.5)';",
-        "context.fillRect(30, 30, 55, 50);",
-        "</script>"
+        "var cont = document.body;",
+        "function createAnimal(animal) {cont.appendChild(document.createElement('img')); cont.lastElementChild.src = `assets/${animal.toLowerCase()}.svg`; cont.lastElementChild.class = 'animal'}",
+        "var num = 1;",
+        "",
+        "while (num <= 1) {",
+        () => `  createAnimal('${animal}');`,
+        "",
+        "// Don't touch this next line or",
+        "// you might get caught in the loop!",
+        "  num = num + 1;",
+        "}",
+        "</script></body>",
       ],
       hiddenLines: [
+        {start: -1, end: 4}, {start: 13, end: 14}
       ]
     },
-    // array of functions to test the challenge?
-    tests: []
+    tests: [{
+      test: "$('#preview').contents().find('img').length > 1",
+      message: "It looks like your animal is still alone.\nDid you try modifying the number next to the while loop?"
+    }],
+    callbacks: [
+
+    ]
   },
   {
     number: 2,

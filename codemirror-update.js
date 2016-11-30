@@ -1,13 +1,12 @@
 /*global $ CodeMirror challenges:true*/
 // Same as $(document).ready(function(){ ... });
-$(() => {
 
 var animal = "";
 var color = "";
-
 var delay = 0;
-
 var currentChallenge = 0;
+
+$(() => {
 
 // DOM items
 var title = document.getElementById('title');
@@ -59,8 +58,10 @@ function constructPage(challengeNumber) {
 function setupEditor(challenge) {
   var editorVal = '';
   for (var i = 0; i < challenge.seed.code.length; i++) {
-    if (i === 0) editorVal += challenge.seed.code[i];
-    else editorVal += `\n${challenge.seed.code[i]}`;
+    editorVal += (typeof challenge.seed.code[i] === "function") ? challenge.seed.code[i]() : challenge.seed.code[i];
+    if (!(i === challenge.seed.code.length - 1)) {
+      editorVal += "\n";
+    }
   }
   editor.setValue(editorVal);
   for (var j = 0; j < challenge.seed.hiddenLines.length; j++) {
@@ -83,6 +84,8 @@ function setupText(challenge) {
 
   for (var i = 0; i < challenge.instructions.length; i++) {
     var p = document.createElement("p");
+    (typeof challenge.instructions[i] === "function") ?
+    p.innerHTML = challenge.instructions[i]() :
     p.innerHTML = challenge.instructions[i];
     instructions.appendChild(p);
   }
