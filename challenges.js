@@ -1,3 +1,6 @@
+/* global animal color $*/
+
+
 const challenges = [
   {
     number: 0,

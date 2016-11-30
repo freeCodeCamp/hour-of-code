@@ -1,5 +1,4 @@
-/*global $ CodeMirror challenges:true*/
-// Same as $(document).ready(function(){ ... });
+/*global $ CodeMirror challenges _*/
 
 var animal = "";
 var color = "";
@@ -24,6 +23,43 @@ var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
   theme: "mdn-like elegant"
 });
 
+// Set up preview seed and hide lines irrelevant to learner
+
+function setupEditor(challenge) {
+ var editorVal = '';
+ for (var i = 0; i < challenge.seed.code.length; i++) {
+   editorVal += (typeof challenge.seed.code[i] === "function") ? challenge.seed.code[i]() : challenge.seed.code[i];
+   if (!(i === challenge.seed.code.length - 1)) {
+     editorVal += "\n";
+   }
+ }
+ editor.setValue(editorVal);
+ for (var j = 0; j < challenge.seed.hiddenLines.length; j++) {
+   var range = challenge.seed.hiddenLines[j];
+   editor.markText({line: range.start}, {line: range.end}, {inclusiveRight: true, inclusiveLeft: true, collapsed: true});
+ }
+}
+
+// Set up instructions for current challange
+
+function setupText(challenge) {
+ successMsg.className = 'hidden';
+ title.innerText = challenge.name;
+
+ // Clear old instructions
+ while(instructions.firstChild) {
+   instructions.removeChild(instructions.firstChild);
+ }
+
+ for (var i = 0; i < challenge.instructions.length; i++) {
+   var p = document.createElement("p");
+   (typeof challenge.instructions[i] === "function") ?
+   p.innerHTML = challenge.instructions[i]() :
+   p.innerHTML = challenge.instructions[i];
+   instructions.appendChild(p);
+ }
+}
+
 function updatePreview() {
   var previewFrame = document.getElementById('preview');
   var preview =  previewFrame.contentDocument ||  previewFrame.contentWindow.document;
@@ -31,6 +67,13 @@ function updatePreview() {
   preview.write(editor.getValue());
   preview.close();
   editor.refresh();
+}
+
+function constructPage(challengeNumber) {
+  var challenge = _.find(challenges, c => c.number === challengeNumber);
+  nextChallenge.className += " hidden"
+  setupEditor(challenge);
+  setupText(challenge);
 }
 
 editor.on("change", function() {
@@ -45,61 +88,29 @@ nextChallenge.onclick = function() {
 
 constructPage(currentChallenge);
 
-function constructPage(challengeNumber) {
-  var challenge = _.find(challenges, c => c.number === challengeNumber);
-  nextChallenge.className += " hidden"
-  setupEditor(challenge);
-  setupText(challenge);
-}
-
-/**
- * Set up preview seed and hide lines irrelevant to learner
- */
-function setupEditor(challenge) {
-  var editorVal = '';
-  for (var i = 0; i < challenge.seed.code.length; i++) {
-    editorVal += (typeof challenge.seed.code[i] === "function") ? challenge.seed.code[i]() : challenge.seed.code[i];
-    if (!(i === challenge.seed.code.length - 1)) {
-      editorVal += "\n";
-    }
-  }
-  editor.setValue(editorVal);
-  for (var j = 0; j < challenge.seed.hiddenLines.length; j++) {
-    var range = challenge.seed.hiddenLines[j];
-    editor.markText({line: range.start}, {line: range.end}, {inclusiveRight: true, inclusiveLeft: true, collapsed: true});
-  }
-}
-
-/**
- * Set up instructions for current challange
- */
-function setupText(challenge) {
-  successMsg.className = 'hidden';
-  title.innerText = challenge.name;
-
-  // Clear old instructions
-  while(instructions.firstChild) {
-    instructions.removeChild(instructions.firstChild);
-  }
-
-  for (var i = 0; i < challenge.instructions.length; i++) {
-    var p = document.createElement("p");
-    (typeof challenge.instructions[i] === "function") ?
-    p.innerHTML = challenge.instructions[i]() :
-    p.innerHTML = challenge.instructions[i];
-    instructions.appendChild(p);
-  }
-}
-
-
-checkBtn.onclick = function() {
-  runChallengeTests(currentChallenge);
-}
-
 resetBtn.onclick = function() {
   setupEditor(challenges[currentChallenge]);
 }
 
+// Display either a message of success or indication of error, based on test results
+
+function displayResults(testMsgs) {
+ if (testMsgs.length === 0) {
+   challenges[currentChallenge].callbacks.forEach(func => {
+     func();
+   });
+   successMsg.className = '';
+   successMsg.innerText = "Well done! Click the Next Challenge button to continue.";
+   nextChallenge.className = 'btn';
+ } else {
+   failMsg.className = '';
+   for (var i = 0; i < testMsgs.length; i++) {
+     var p = document.createElement('p');
+     p.innerText = testMsgs[i];
+     failMsg.appendChild(p);
+   }
+ }
+}
 
 function runChallengeTests(challengeNumber) {
   // Clear any existing error messages
@@ -122,25 +133,8 @@ function runChallengeTests(challengeNumber) {
   displayResults(testMsgs);
 }
 
-/**
- * Display either a message of success or indication of error, based on test results
- */
-function displayResults(testMsgs) {
-  if (testMsgs.length === 0) {
-    challenges[currentChallenge].callbacks.forEach(func => {
-      func();
-    });
-    successMsg.className = '';
-    successMsg.innerText = "Well done! Click the Next Challenge button to continue.";
-    nextChallenge.className = 'btn';
-  } else {
-    failMsg.className = '';
-    for (var i = 0; i < testMsgs.length; i++) {
-      var p = document.createElement('p');
-      p.innerText = testMsgs[i];
-      failMsg.appendChild(p);
-    }
-  }
+checkBtn.onclick = function() {
+  runChallengeTests(currentChallenge);
 }
 
 });
