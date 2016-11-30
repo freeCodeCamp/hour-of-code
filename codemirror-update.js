@@ -4,11 +4,12 @@ $(() => {
 
 var delay = 0;
 
-var currentChallenge = 1;
+var currentChallenge = 0;
 
 var title = document.getElementById('title');
 var instructions = document.getElementById('instructions');
 var nextChallenge = document.getElementById('next-button');
+var checkBtn = document.getElementById('check-button');
 
 var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
   mode: 'htmlmixed',
@@ -24,10 +25,15 @@ function updatePreview() {
   preview.close();
 }
 
-editor.on("change", function() {
-  clearTimeout(delay);
+/*editor.on("change", function() {
   delay = setTimeout(updatePreview, 300);
 });
+*/
+
+checkBtn.onclick = function() {
+  updatePreview();
+}
+
 
 nextChallenge.onclick = function() {
   currentChallenge++;
