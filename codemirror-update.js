@@ -11,12 +11,12 @@ var title = document.getElementById('title');
 var instructions = document.getElementById('instructions');
 var nextChallenge = document.getElementById('next-button');
 var checkBtn = document.getElementById('check-button');
+var resetBtn = document.getElementById('reset-button');
 var successMsg = document.getElementById('success-msg');
 var failMsg = document.getElementById('fail-msg');
 
 var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
   mode: 'htmlmixed',
-  lineNumbers: false,
   theme: "mdn-like"
 });
 
@@ -75,7 +75,7 @@ function setupText(challenge) {
   while(instructions.firstChild) {
     instructions.removeChild(instructions.firstChild);
   }
-  
+
   for (var i = 0; i < challenge.instructions.length; i++) {
     var p = document.createElement("p");
     p.innerHTML = challenge.instructions[i];
@@ -87,6 +87,11 @@ function setupText(challenge) {
 checkBtn.onclick = function() {
   runChallengeTests(currentChallenge);
 }
+
+resetBtn.onclick = function() {
+  setupEditor(challenges[currentChallenge]);
+}
+
 
 function runChallengeTests(challengeNumber) {
   // Clear any existing error messages

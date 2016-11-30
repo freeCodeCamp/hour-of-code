@@ -95,8 +95,24 @@ h2 {
   flex-direction: column;
 }
 
+#user-input {
+    flex-grow: 1;
+    position: relative;
+}
+
+#user-input button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 0;
+  border-radius: 0;
+  height: 50px;
+  width: 130px;
+  font-size: 24px;
+  z-index: 2;
+}
+
 #code, .CodeMirror {
-  flex-grow: 1;
   resize: none;
   border: 1px solid gray;
 }

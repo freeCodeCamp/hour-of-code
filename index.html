@@ -25,7 +25,7 @@
   <script src="vendor/mode/javascript/javascript.js"></script>
   <script src="vendor/mode/css/css.js"></script>
   <script src="vendor/mode/htmlmixed/htmlmixed.js"></script>
-  
+
   <!-- Page scripts -->
   <script src="codemirror-update.js"></script>
   <script src="challenges.js"></script>
@@ -50,7 +50,10 @@
       <div class="instructions" id="instructions"></div>
 
       <hr>
-      <textarea id="code" name="code"></textarea>
+      <div id="user-input">
+        <textarea id="code" name="code"></textarea>
+        <button class="btn" id="reset-button">Reset</button>
+      </div>
     </div>
 
     <div class="right">
@@ -60,8 +63,8 @@
     </div>
 
   </div>
-  
+
   <button id="next-button" class="btn">Next Challenge <i class="fa fa-arrow-right bounce"></i></button>
-  
+
 </body>
 </html>
