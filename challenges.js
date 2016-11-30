@@ -4,22 +4,25 @@ const challenges = [
     name: "#0 Welcome to 'Hour of Code'!",
     instructions: [
       "In this adventure, we will be playing with an animal using code!",
-      "Choose your animal, and its color.",
+      "Choose your animal, and your color.",
       "Here are your choices:",
       "<div class='animal-container'><div class='monkey'>Monkey: <img class='animal' src='assets/monkey.svg' alt='monkey'></div><div class='horse'>Horse: <img class='animal' src='assets/horse.svg' alt='horse'></div><div class='tiger'>Tiger: <img class='animal' src='assets/tiger.svg' alt='tiger'></div></div>",
       "<div class='color-container'><div class='red'>Red</div><div class='green'>Green</div><div class='blue'>Blue</div></div>",
       "Create your animal below by changing 'animal' and 'color' to your selection!"
     ],
     seedCode: [
-      "<canvas id=pane width=300 height=300></canvas>",
-      "<div style='display:none;'><img id='img-cont'></div>",
+      "<div id='preview-container'>",
+      "<link rel='stylesheet' href='preview-style.css'>",
+      "<img style='width: 150px; height: 150px' id='img-cont'>",
       "<script type='text/javascript'>",
-      "var canvas = document.getElementById('pane');",
-      "var ctx = canvas.getContext('2d');",
-      "var monkey='monkey'; var horse='horse'; var tiger='tiger';",
+      "var img = document.getElementById('img-cont');var body = document.getElementsByTagName('body')[0];",
+      "var monkey='monkey'; var horse='horse'; var tiger='tiger'; var red='palevioletred'; var green='palegreen'; var blue='paleturquoise';",
+      "function createAnimal(animal) {img.src = `assets/${animal}.svg`;}",
+      "function chooseColor(color) {body.style=`background-color: ${color}`;}",
       "createAnimal(animal);",
-      "function createAnimal(animal, color) {var img=document.getElementById('img-cont');img.src='assets/'+animal+'.svg';ctx.drawImage(img,0,0,img.width,img.height,0,0,300,300);}",
-      "</script>"
+      "chooseColor(color);",
+      "</script>",
+      "</div>"
     ],
     // array of functions to test the challenge?
     tests: []

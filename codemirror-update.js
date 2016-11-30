@@ -23,16 +23,17 @@ function updatePreview() {
   preview.open();
   preview.write(editor.getValue());
   preview.close();
+  editor.refresh();
 }
 
-/*editor.on("change", function() {
+editor.on("change", function() {
   delay = setTimeout(updatePreview, 300);
 });
-*/
 
-checkBtn.onclick = function() {
+
+/*checkBtn.onclick = function() {
   updatePreview();
-}
+}*/
 
 
 nextChallenge.onclick = function() {
