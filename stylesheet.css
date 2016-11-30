@@ -173,6 +173,16 @@ h2 {
 
 .animal {
   width: 100px;
+  height: 100px;
+  padding-top: 15px;
+}
+
+.monkey, .horse, .tiger {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 22px;
+  color: hsl(120, 100%, 30%);
 }
 
 .red, .green, .blue {

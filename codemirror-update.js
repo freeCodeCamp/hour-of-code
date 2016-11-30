@@ -27,6 +27,7 @@ function updatePreview() {
 }
 
 editor.on("change", function() {
+  clearInterval(delay);
   delay = setTimeout(updatePreview, 300);
 });
 
@@ -49,15 +50,20 @@ function constructPage(challengeNumber) {
   setupText(challenge);
 }
 
+/**
+ * Set up preview seed and hide lines irrelevant to learner
+ */
 function setupEditor(challenge) {
   var editorVal = '';
-  for (var i = 0; i < challenge.seedCode.length; i++) {
-    if (i === 0) editorVal += challenge.seedCode[i];
-    else editorVal += `\n${challenge.seedCode[i]}`;
+  for (var i = 0; i < challenge.seed.code.length; i++) {
+    if (i === 0) editorVal += challenge.seed.code[i];
+    else editorVal += `\n${challenge.seed.code[i]}`;
   }
   editor.setValue(editorVal);
-  //editor.markText({line: 0}, {line: 1}, {inclusiveRight: true, inclusiveLeft: true, collapsed: true});
-  //editor.markText({line: 16}, {line: 21}, {inclusiveRight: true, inclusiveLeft: true, collapsed: true});
+  for (var j = 0; j < challenge.seed.hiddenLines.length; j++) {
+    var range = challenge.seed.hiddenLines[j];
+    editor.markText({line: range.start}, {line: range.end}, {inclusiveRight: true, inclusiveLeft: true, collapsed: true});
+  }
 }
 
 /**
