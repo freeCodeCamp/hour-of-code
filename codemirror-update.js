@@ -1,6 +1,9 @@
-/*global $ CodeMirror:true*/
+/*global $ CodeMirror challenges:true*/
 // Same as $(document).ready(function(){ ... });
 $(() => {
+
+var animal = "";
+var color = "";
 
 var delay = 0;
 
@@ -17,7 +20,9 @@ var failMsg = document.getElementById('fail-msg');
 
 var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
   mode: 'htmlmixed',
-  theme: "mdn-like"
+  lineNumbers: true,
+  lineNumberFormatter: () => "",
+  theme: "mdn-like elegant"
 });
 
 function updatePreview() {
@@ -119,6 +124,9 @@ function runChallengeTests(challengeNumber) {
  */
 function displayResults(testMsgs) {
   if (testMsgs.length === 0) {
+    challenges[currentChallenge].callbacks.forEach(func => {
+      func();
+    });
     successMsg.className = '';
     successMsg.innerText = "Well done! Click the Next Challenge button to continue.";
     nextChallenge.className = 'btn';

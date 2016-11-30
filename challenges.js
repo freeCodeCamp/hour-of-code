@@ -37,6 +37,10 @@ const challenges = [
         test: "$('#preview').contents().find('body')[0].className === 'red' || $('#preview').contents().find('body')[0].className === 'green' || $('body').className === 'green' || $('#preview').contents().find('body')[0].className === 'blue'",
         message: "Did you change color to either red, green or blue?"
       }
+    ],
+    callbacks: [
+      () => { animal = /\/(\w+)\.svg/.exec($('#preview').contents().find('#img-cont')[0].src)[1]; },
+      () => { color = $('#preview').contents().find('body')[0].className; },
     ]
   },
   {
@@ -47,7 +51,7 @@ const challenges = [
       "Second part of instructions with code: <span class='inline-code'>console.log('awesome')</span>",
       "Final set of instructions for this challenge"
     ],
-    seed:{
+    seed: {
       code: [
         "<canvas id=pane width=300 height=200></canvas>",
         "<script type='text/javascript'>",
