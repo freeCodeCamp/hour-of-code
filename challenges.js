@@ -85,24 +85,144 @@ const challenges = [
   },
   {
     number: 2,
-    name: "#2 This be the Second Challenge",
+    name: "#2 Names for Everyone",
     instructions: [
-      "Here's another instruction set",
-      "This one also has some <i>italics</i>.",
-      "It has <b>bold</b> too!"
+      () => `You know, it's a bit boring calling this guy "${animal}".\nWe wouldn't be able to tell who was who in that last challenge.`,
+      "How about we give him a <i>name</i>? We can create variables that hold information like this:",
+      // TODO code demo
+      () => `Let's try and name two ${animal}s.`
+    ],
+    seed: {
+      code: [],
+      hiddenLines: []
+    },
+    tests: [],
+    callbacks: [
+      // save name one and name 2
+    ],
+  },
+  {
+    number: 3,
+    name: "#3 It's ALLIIIIVEEEE!",
+    instructions: [
+      "Hmm, I bet they're getting restless by now. How about we help them move around?",
+      () => `You can select a ${animal} by typing <span class='inline-code'>$("#name")</span> with their proper name.`,
+      'Now we can add animation by appending the selection with <span class="inline-code">.addClass("x")</span>',
+      'replacing <span class="inline-code"x</span> with which animation you want.',
+      `Here's some animations that work (there's more!): <span class="inline-code">bounce flash pulse rubberBand shake swing tada wobble jello</span>`,
+      () => `Try to get both ${name1} and ${name2} moving!`
+    ],
+    seed: {
+      // remember to add animation and infinite classes
+      code: [
+
+      ],
+      hiddenLines: [
+
+      ]
+    },
+    tests: [],
+    callbacks: []
+  },
+  {
+    number: 4,
+    name: "#4 Introducing Borders",
+    instructions: [
+      "Now that they're moving around, we should probably make sure they don't run away!",
+      "Let's remodel the room while they're gone."
+      // introduce <style></style> tag, border radius, style, color, size
+    ],
+    seed: {
+      code: [],
+      hiddenLines: []
+    },
+    tests: [],
+    callbacks: [],
+  },
+  {
+    number: 5,
+    name: "#5 A Change of Scenery",
+    instructions: [
+      "You're probably getting tired of that background by now... What about we use a picture instead?",
+      // change background-image, filter?
+    ],
+    seed: {
+      code: [],
+      hiddenLines: []
+    },
+    tests: [],
+    callbacks: [],
+  },
+  {
+    number: 6,
+    name: "#6 Making Signs",
+    // introduce html element, maybe just <h1></h1>, font-size, color, background-color
+    instructions: [
+      "Hey, it's starting to look pretty spiffy. I think we 'ought to hang up a sign somewhere, so that people can find this place."
+      // you can animate the title too!
+    ],
+    seed: {
+      code: [],
+      hiddenLines: []
+    },
+    tests: [],
+    callbacks: [],
+  },
+  {
+    number: 7,
+    name: "#7 Let's Add Knickknacks",
+    instructions: [
+      "Since it's almost the holiday season I think we should decorate the place.",
+      // introduce <img> tag with src, tell them to id all of them for next challenge
     ],
     seed: {
       code: [
-        "<p>Yay, challenge2!</p>",
-        "<canvas id=pane width=300 height=200></canvas>",
-        "<script type='text/javascript'>",
-        "var canvas = document.getElementById('pane');",
-        "var context = canvas.getContext('2d');",
-        "context.fillStyle = 'rgb(0,0,0)';",
-        "context.fillRect(10, 10, 55, 50);",
-        "context.fillStyle = 'rgba(0, 0, 250, 0.5)';",
-        "context.fillRect(30, 30, 55, 50);",
-        "</script>"
+      ],
+      hiddenLines: [
+      ]
+    },
+    tests: []
+  },
+  {
+    number: 8,
+    name: "#8 Positioning",
+    instructions: [
+      "It's dangerous having everything lumped up in the center like that. Let's reposition the decorations.",
+      // absolute positioning, let them use top: left, etc. using id selectors
+    ],
+    seed: {
+      code: [
+      ],
+      hiddenLines: [
+      ]
+    },
+    tests: []
+  },
+  {
+    number: 9,
+    name: "#9 Let's Resize!",
+    instructions: [
+      "",
+      // height, width, z-index
+    ],
+    seed: {
+      code: [
+      ],
+      hiddenLines: [
+      ]
+    },
+    tests: []
+  },
+  {
+    number: 10,
+    name: "#10 HTML Animals",
+    instructions: [
+      "OK, I think we're ready to let the animals back in.",
+      // Use img to create the elements
+      // Use jQuery to select/give them animations
+    ],
+    seed: {
+      code: [
       ],
       hiddenLines: [
       ]
