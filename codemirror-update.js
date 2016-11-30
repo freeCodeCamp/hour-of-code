@@ -23,6 +23,16 @@ var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
   theme: "mdn-like elegant"
 });
 
+// Get website URL for linkback at top
+
+var url = window.location.origin;
+$('#linkback').html(`<a href="${url}">Return to Start</a>`);
+
+$('#linkback').click(e => {
+  if (!(confirm("Are you sure you want to restart? You'll lose any progress.")))
+    e.preventDefault();
+});
+
 // Set up preview seed and hide lines irrelevant to learner
 
 function setupEditor(challenge) {

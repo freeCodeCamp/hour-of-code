@@ -37,6 +37,16 @@ hr {
   font-size: 25px;
 }
 
+#linkback a {
+  position: absolute;
+  color: white;
+  text-decoration: none;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 25px;
+  font-size: 14px;
+}
+
 h2 {
   font-family: "Rock Salt", Lato, Serif;
   margin-bottom: 5px;
