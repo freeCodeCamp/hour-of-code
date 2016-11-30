@@ -7,7 +7,7 @@ const challenges = [
       "Choose your animal, and your color.",
       "<div class='animal-container'><div class='monkey'><span>Monkey</span> <img class='animal' src='assets/monkey.svg' alt='monkey'></div><div class='horse'><span>Horse</span> <img class='animal' src='assets/horse.svg' alt='horse'></div><div class='tiger'><span>Tiger</span> <img class='animal' src='assets/tiger.svg' alt='tiger'></div></div>",
       "<div class='color-container'><div class='red'>Red</div><div class='green'>Green</div><div class='blue'>Blue</div></div>",
-      "Create your animal below by changing 'animal' and 'color' to your selection!"
+      "Create your animal below by changing <span class='inline-code'>animal</span> and <span class='inline-code'>color</span> to your selection, leaving the quotes."
     ],
     seed: {
       code: [
@@ -16,20 +16,28 @@ const challenges = [
         "<img style='width: 150px; height: 150px' id='img-cont'>",
         "<script type='text/javascript'>",
         "var img = document.getElementById('img-cont');var body = document.getElementsByTagName('body')[0];",
-        "var monkey='monkey'; var horse='horse'; var tiger='tiger'; var red='palevioletred'; var green='palegreen'; var blue='paleturquoise';",
-        "function createAnimal(animal) {img.src = `assets/${animal}.svg`;}",
-        "function chooseColor(color) {body.style=`background-color: ${color}`;}",
-        "createAnimal(animal);",
-        "chooseColor(color);",
+        "function createAnimal(animal) {img.src = `assets/${animal.toLowerCase()}.svg`;}",
+        "function chooseColor(color) {body.className=color;}",
+        "createAnimal('animal');",
+        "chooseColor('color');",
         "</script>",
         "</div>"
       ],
       hiddenLines: [
-        {start: -1, end: 7}, {start: 9, end: 11}
+        {start: -1, end: 6}, {start: 8, end: 12}
       ]
     },
     // array of functions to test the challenge?
-    tests: []
+    tests: [
+      {
+        test: "$('#preview').contents().find('#img-cont')[0].src.match('monkey') || $('#preview').contents().find('#img-cont')[0].src.match('horse') || $('#preview').contents().find('#img-cont')[0].src.match('tiger')",
+        message: "Did you change animal to either monkey, horse or tiger?"
+      },
+      {
+        test: "$('#preview').contents().find('body')[0].className === 'red' || $('#preview').contents().find('body')[0].className === 'green' || $('body').className === 'green' || $('#preview').contents().find('body')[0].className === 'blue'",
+        message: "Did you change color to either red, green or blue?"
+      }
+    ]
   },
   {
     number: 1,

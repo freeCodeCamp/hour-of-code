@@ -200,3 +200,29 @@ h2 {
 .blue {
   background-color: paleturquoise;
 }
+
+.hidden {
+  display: none;
+}
+
+#success-msg {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  text-align: center;
+  color: white;
+  background-color: hsla(130, 70%, 40%, 0.5);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+#fail-msg {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  text-align: center;
+  color: white;
+  background-color: hsla(0, 70%, 40%, 0.5);
+  padding: 20px;
+  border-radius: 10px;
+}
