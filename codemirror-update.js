@@ -4,9 +4,24 @@ var animal = "";
 var color = "";
 var name1 = "";
 var name2 = "";
+var ani1 = "";
+var ani2 = "";
+const animationList = ["bounce", "flash", "pulse", "rubberBand", "shake", "headShake", "swing", "tada", "wobble", "jello"];
 var iFrame = {};
 var delay = 0;
 var currentChallenge = 0;
+
+function clear() {
+  animal = "";
+  color = "";
+  name1 = "";
+  name2 = "";
+  ani1 = "";
+  ani2 = "";
+  iFrame = {};
+  delay = 0;
+  currentChallenge = 0;
+}
 
 $(() => {
 
@@ -34,6 +49,7 @@ $('#linkback').html(`<a href="${url}">Return to Start</a>`);
 $('#linkback').click(e => {
   if (!(confirm("Are you sure you want to restart? You'll lose any progress.")))
     e.preventDefault();
+  else clear();
 });
 
 // Set up preview seed and hide lines irrelevant to learner
@@ -138,7 +154,7 @@ function runChallengeTests(challengeNumber) {
   for (var i = 0; i < challenge.tests.length; i++) {
     var testObj = challenge.tests[i];
     //console.log($('#preview').contents().find('#img-cont')[0].src);
-    var pass = eval(testObj.test);
+    var pass = (typeof testObj.test === "function") ? testObj.test() : eval(testObj.test);
     if (!pass) {
       testMsgs.push(testObj.message);
     }

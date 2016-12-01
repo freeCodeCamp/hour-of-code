@@ -1,4 +1,4 @@
-/* global animal color name1 name2 iFrame $*/
+/* global animal color name1 name2 iFrame animatecss $*/
 
 
 const challenges = [
@@ -105,7 +105,7 @@ const challenges = [
         "",
         `if (name1) { document.getElementById("name1").textContent = name1 }; if (name2) { document.getElementById("name2").textContent = name2 }; parent.iFrame = window;`,
         `</script><style>`,
-          `body { height: 90%; display: flex; justify-content: center; align-items: center; }`,
+          `body { height: 90%; weight: 99%; display: flex; justify-content: center; align-items: center; }`,
           `img { width: 150px; height: 150px; text-align: center;}`,
           `p { font-size: 20px; font-family: arial; font-weight: bold; text-align: center; margin: 0; }`,
           `.red { background-color: palevioletred; }
@@ -132,26 +132,56 @@ const challenges = [
   },
   {
     number: 3,
-    name: "#3 It's ALLIIIIVEEEE!",
+    name: "#3 It's ALIVE!",
     instructions: [
-      "Hmm, I bet they're getting restless by now. How about we help them move around?",
-      () => `You can select a ${animal} by typing <span class='inline-code'>$("#name")</span> with their proper name.`,
-      'Now we can add animation by appending the selection with <span class="inline-code">.addClass("x")</span>',
-      'replacing <span class="inline-code"x</span> with which animation you want.',
-      `Here's some animations that work (there's more!): <span class="inline-code">bounce flash pulse rubberBand shake swing tada wobble jello</span>`,
-      () => `Try to get both ${name1} and ${name2} moving!`
+      "I bet they're getting restless by now. Let's shake things up!",
+      () => `To select a ${animal}: <span class='inline-code'>document.getElementById("name")</span>`,
+      `And make it move: <span class="inline-code">.className += "x";</span>`,
+      `Replace <span class="inline-code">x</span> with which animation you want.`,
+      `Here's a list of animations that work:`,
+      `<span class="inline-code">bounce flash pulse rubberBand shake headShake swing tada wobble jello</span>`,
+      () => `Try to get both <b>${name1}</b> and <b>${name2}</b> moving!`
     ],
     seed: {
-      // remember to add animation and infinite classes
       code: [
-
+        () => `<body class='${color}'>
+          <div><p>${name1}</p><img id="${name1}" src="assets/${animal}.svg" class="animated infinite "></div>
+          <div><p>${name2}</p><img id="${name2}" src="assets/${animal}.svg" class="animated infinite "></div><script>var name1 = "${name1}"; var name2 = "${name2}";`,
+          "// Remember to change NAME.",
+          "// You can write out the name or use the",
+          "// variables name1 and name2 (& delete the quotes).",
+          "",
+          () => `document.getElementById("NAME").className += "ANIMATION";`,
+          () => `document.getElementById("NAME").className += "ANIMATION";`,
+          "",
+          "",
+        `</script><style>`,
+          `body { height: 90%; display: flex; justify-content: center; align-items: center; }`,
+          `img { width: 150px; height: 150px; text-align: center;}`,
+          `p { font-size: 20px; font-family: arial; font-weight: bold; text-align: center; margin: 0; }`,
+          `.red { background-color: palevioletred; }
+          .green { background-color: palegreen; }
+          .blue { background-color: paleturquoise; }
+          ${animatecss}`,
+        `</style></body>`,
       ],
       hiddenLines: [
-
+        {start: -1, end: 2}, {start: 10, end: 1000}
       ]
     },
-    tests: [],
-    callbacks: []
+    tests: [{
+      test: () => $('#preview').contents().find(`#${name1}`)[0].className.match(/animated infinite (\w+)/) && $('#preview').contents().find(`#${name2}`)[0].className.match(/animated infinite (\w+)/),
+      message: `Did you give change NAME properly?`
+    }, {
+      test: () => $('#preview').contents().find(`#${name1}`)[0].className.match(/animated infinite (\w+)/)
+      && $('#preview').contents().find(`#${name2}`)[0].className.match(/animated infinite (\w+)/)
+      && animationList.includes($(`#preview`).contents().find(`#${name1}`)[0].className.match(/animated infinite (\w+)/)[1])
+      && animationList.includes($(`#preview`).contents().find(`#${name2}`)[0].className.match(/animated infinite (\w+)/)[1]),
+      message: 'Did you use the listed animations?'
+    }],
+    callbacks: [
+      () => { ani1 = $('#preview').contents().find(`#${name1}`)[0].className; ani2 = $('#preview').contents().find(`#${name2}`)[0].className; }
+    ]
   },
   {
     number: 4,
