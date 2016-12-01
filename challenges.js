@@ -1,6 +1,5 @@
 /* global animal color name1 name2 iFrame animatecss $*/
 
-
 const challenges = [
   {
     number: 0,
@@ -151,8 +150,8 @@ const challenges = [
           "// You can write out the name or use the",
           "// variables name1 and name2 (& delete the quotes).",
           "",
-          () => `document.getElementById("NAME").className += "ANIMATION";`,
-          () => `document.getElementById("NAME").className += "ANIMATION";`,
+          `document.getElementById("NAME").className += "ANIMATION";`,
+          `document.getElementById("NAME").className += "ANIMATION";`,
           "",
           "",
         `</script><style>`,
@@ -187,66 +186,167 @@ const challenges = [
     number: 4,
     name: "#4 Introducing Borders",
     instructions: [
-      "Now that they're moving around, we should probably make sure they don't run away!",
-      "Let's remodel the room while they're gone."
-      // introduce <style></style> tag, border radius, style, color, size
+      "Now that they're moving around, we should probably make sure they don't run away! Let's remodel the room while they're gone.",
+      "Try changing the <span class='inline-code'>style</span>, <span class='inline-code'>size</span>, and <span class='inline-code'>color</span> of the border until you find something you like. Border styles:",
+      "<img src='http://www.vanseodesign.com/blog/wp-content/uploads/2011/10/border-styles.png'>"
     ],
     seed: {
-      code: [],
-      hiddenLines: []
+      code: [
+        `<style>`,
+          `  body {`,
+            `    border-style: none;`,
+            `    border-width: 0px;`,
+            `    border-color: black;`,
+          `  }`,
+        `</style>`,
+        "",
+        `<style>body { height: 97%; box-sizing: border-box; }</style>`
+      ],
+      hiddenLines: [{start: 7, end: 8}]
     },
-    tests: [],
-    callbacks: [],
+    tests: [{
+      test: () => ($("iframe").contents().find("body").css("border-top-style") !== "none"),
+      message: "Pick a border-style from the image that is not \"none\"."
+    }, {
+      test: () => (/(\d+)px/g.exec($("iframe").contents().find("body").css("border-top-width"))) && +(/(\d+)px/g.exec($("iframe").contents().find("body").css("border-top-width"))[1]) > 0,
+      message: "Did you keep 'px' after your width number?"
+    }],
+    callbacks: [
+      () => borderStyle.push($("iframe").contents().find("body").css("border-top-style"), $("iframe").contents().find("body").css("border-top-width"), $("iframe").contents().find("body").css("border-top-color"))
+    ],
   },
   {
     number: 5,
     name: "#5 A Change of Scenery",
     instructions: [
-      "You're probably getting tired of that background by now... What about we use a picture instead?",
-      // change background-image, filter?
+      "There's other things we can do with style tags. You're probably getting tired of that background by now... What about we use a picture instead?",
+      "<img src='assets/terrain.jpg'>",
+      "To change the background image,  we can use",
+      "<pre class='codeblock'>background-image: url('assets/IMAGE.jpg');</pre>",
+      () => `Replace <span class='inline-code'>IMAGE</span> with a type of flooring your ${animal}s would like!`
     ],
     seed: {
-      code: [],
-      hiddenLines: []
+      code: [
+        `<style>`,
+          `  body {`,
+            `    background-image: `,
+          `  }`,
+        `</style>`,
+        "",
+        () => `<style>body { height: 97%; box-sizing: border-box; background-size: cover; border: ${borderStyle[1]} ${borderStyle[0]} ${borderStyle[2]};}</style>`
+      ],
+      hiddenLines: [{start: 5, end: 7}]
     },
-    tests: [],
-    callbacks: [],
+    tests: [{
+      test: () => {
+        const url = $("iframe").contents().find("body").css("background-image").slice(-18);
+        return (url === '/assets/dirt.jpg")') || (url === 'assets/grass.jpg")') || (url === 'assets/stone.jpg")');
+      },
+      message: "Did you replace IMAGE with one of the three types: dirt, grass, or stone?\nRemember to use the format in the instructions: url('assets/IMAGE.jpg');"
+    }],
+    callbacks: [
+      () => bg = $("iframe").contents().find("body").css("background-image"),
+      () => color = (color === "red") ? "palevioletred" : ((color === "green") ? "palegreen" : "paleturquoise")
+    ],
   },
   {
     number: 6,
     name: "#6 Making Signs",
     // introduce html element, maybe just <h1></h1>, font-size, color, background-color
     instructions: [
-      "Hey, it's starting to look pretty spiffy. I think we 'ought to hang up a sign somewhere, so that people can find this place."
-      // you can animate the title too!
+      "Hey, it's starting to look pretty spiffy. I think we 'ought to hang up a sign somewhere, so that people can find this place.",
+      "Let's create a header element. Whatever you type in between the <code class='inline-code'>h1</code> tags will show up as the title.",
+      "I've added a few more style settings for you to customize, so make sure to fill those in. Remember to add a <code class='inline-code'>;</code> at the end of each line."
     ],
     seed: {
-      code: [],
-      hiddenLines: []
+      code: [
+        `<h1>TITLE</h1>`,
+        "",
+        `<style>`,
+          `  h1 {`,
+            () => `    background-color: ${color};`,
+            `    font-size: 0px;`,
+            `    color: black`,
+          `  }`,
+        `</style>`,
+        "",
+        () => `<style>body { height: 97%; box-sizing: border-box; background-image: ${bg}; background-size: cover; border: ${borderStyle[1]} ${borderStyle[0]} ${borderStyle[2]};}</style>`,
+        `<style>h1 { font-family: arial, sans-serif; font-weight: bold; z-index: 3; position: absolute; top: 50px; left: 50%; transform: translateX(-50%); padding: 20px;}</style>`
+      ],
+      hiddenLines: [{start: 9, end: 14}]
     },
-    tests: [],
-    callbacks: [],
+    tests: [{
+      test: () => $("iframe").contents().find("h1")[0].textContent.length > 0,
+      message: "Make sure there's an actual title inbetween the h1 tags!"
+    }, {
+      test: () => +(/(\d+)px/g.exec($("iframe").contents().find("h1").css("font-size"))[1]) > 0,
+      message: "Did you give it a proper font-size?"
+    }],
+    callbacks: [
+      () => title.push($("iframe").contents().find("h1")[0].textContent, $("iframe").contents().find("h1").css("font-size"), $("iframe").contents().find("h1").css("background-color"), $("iframe").contents().find("h1").css("color"))
+    ],
   },
   {
     number: 7,
     name: "#7 Let's Add Knickknacks",
     instructions: [
-      "Since it's almost the holiday season I think we should decorate the place.",
-      // introduce <img> tag with src, tell them to id all of them for next challenge
+      () => `Since it's almost the holiday season I think we should decorate the place. Let's add some presents for <b>${name1}</b> and <b>${name2}</b> so that they'll come back faster!`,
+      "<img src='assets/presents.jpg' style='margin: -15px 0 -10px 0;'>",
+      `Time to use <code class='inline-code'>img</code> tags. Just like earlier, change the code right before <code class='inline-code'>.png</code> to select your present type.
+      This time we also have to give them <code class='inline-code'>id</code>s.`
     ],
     seed: {
       code: [
+        `<!-- No two IDs should be the same`,
+        `     Try to finish at least 2 presents! -->`,
+        "",
+          `<img src='assets/P0.png' id='present1'>`,
+          `<img src=...>`,
+            "",
+        () => `<style>body { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; height: 97%; box-sizing: border-box; background-image: ${bg}; background-size: cover; border: ${borderStyle[1]} ${borderStyle[0]} ${borderStyle[2]};}</style>`,
+        () => `<h1>${title[0]}</h1><style>h1 { font-size: ${title[1]}; background-color: ${title[2]}; color: ${title[3]}; font-family: arial, sans-serif; font-weight: bold; z-index: 3; position: absolute; top: 50px; left: 50%; transform: translateX(-50%); padding: 20px; }</style>`
       ],
-      hiddenLines: [
-      ]
+      hiddenLines: [{start: 5, end: 8}]
     },
-    tests: []
+    tests: [{
+      test: () => {
+        presents = [];
+        var valid = 0;
+        const arr = $("iframe").contents().find("img");
+        const pres = ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9"];
+        for (var i = 0; i < arr.length; i++) {
+          if (pres.includes(arr[i].src.slice(-6, -4).toLowerCase())) {
+            presents.push(arr[i].src);
+            valid++;
+          }
+          if (i === arr.length - 1)
+          return (valid >= 2);
+        }
+      },
+      message: "You don't seem to have at least 2 valid images. Check your src."
+    }, {
+      test: () => {
+        ids = [];
+        var valid = 0;
+        const arr = $("iframe").contents().find("img");
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i].id && !ids.includes(arr[i].id)) {
+                ids.push(arr[i].id);
+                valid++;
+            }
+            if (i === arr.length - 1)
+                return (valid >= 2);
+            }
+        },
+      message: "You need at least 2 unique id's.\nEvery present should have a different id."
+    }],
+    callbacks: []
   },
   {
     number: 8,
-    name: "#8 Positioning",
+    name: "#8 Push 'n' Pull",
     instructions: [
-      "It's dangerous having everything lumped up in the center like that. Let's reposition the decorations.",
+      "It's boring having everything lumped up in the center like that. Let's reposition the decorations.",
       // absolute positioning, let them use top: left, etc. using id selectors
     ],
     seed: {
@@ -259,22 +359,7 @@ const challenges = [
   },
   {
     number: 9,
-    name: "#9 Let's Resize!",
-    instructions: [
-      "",
-      // height, width, z-index
-    ],
-    seed: {
-      code: [
-      ],
-      hiddenLines: [
-      ]
-    },
-    tests: []
-  },
-  {
-    number: 10,
-    name: "#10 HTML Animals",
+    name: "#9 HTML Animals",
     instructions: [
       "OK, I think we're ready to let the animals back in.",
       // Use img to create the elements

@@ -6,6 +6,11 @@ var name1 = "";
 var name2 = "";
 var ani1 = "";
 var ani2 = "";
+var bg = "";
+var ids = [];
+var presents = [];
+var title = [];
+var borderStyle = [];
 const animationList = ["bounce", "flash", "pulse", "rubberBand", "shake", "headShake", "swing", "tada", "wobble", "jello"];
 var iFrame = {};
 var delay = 0;
@@ -18,9 +23,14 @@ function clear() {
   name2 = "";
   ani1 = "";
   ani2 = "";
+  title = [];
+  ids = [];
+  presents = [];
+  bg = "";
   iFrame = {};
   delay = 0;
   currentChallenge = 0;
+  borderStyle = [];
 }
 
 $(() => {
