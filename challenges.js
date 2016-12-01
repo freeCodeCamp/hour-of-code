@@ -2,8 +2,8 @@
 
 const challenges = [
   {
-    number: 0,
-    name: "#0 Welcome to 'Hour of Code'!",
+    number: 1,
+    name: "#1 Welcome to 'Hour of Code'!",
     instructions: [
       "In this adventure, we will be playing with an animal using code!",
       "Choose your animal, and your color.",
@@ -45,8 +45,8 @@ const challenges = [
     ]
   },
   {
-    number: 1,
-    name: "#1 Making Friends",
+    number: 2,
+    name: "#2 Making Friends",
     instructions: [
       () => `Your ${animal} must be a bit lonely here! You can create more ${animal}s quickly by running a loop. This loop makes 5 animals.`,
       "<pre class='codeblock'>var num = 1;\n\nwhile (num <= 5) {\n   createAnimal('animal');\n   num = num + 1; \n}</pre>",
@@ -81,8 +81,8 @@ const challenges = [
     callbacks: []
   },
   {
-    number: 2,
-    name: "#2 Names for Everyone",
+    number: 3,
+    name: "#3 Names for Everyone",
     instructions: [
       () => `You know, it's a bit boring calling this guy "${animal}".\nWe wouldn't be able to tell who was who in that last challenge.`,
       "How about we give him a <i>name</i> ? We can create variables that hold information like this:",
@@ -105,7 +105,7 @@ const challenges = [
         `if (name1) { document.getElementById("name1").textContent = name1 }; if (name2) { document.getElementById("name2").textContent = name2 }; parent.iFrame = window;`,
         `</script><style>`,
           `body { height: 90%; weight: 99%; display: flex; justify-content: center; align-items: center; }`,
-          `img { width: 150px; height: 150px; text-align: center;}`,
+          `img { width: 150px; height: 150px; }`,
           `p { font-size: 20px; font-family: arial; font-weight: bold; text-align: center; margin: 0; }`,
           `.red { background-color: palevioletred; }
           .green { background-color: palegreen; }
@@ -130,8 +130,8 @@ const challenges = [
     ],
   },
   {
-    number: 3,
-    name: "#3 It's ALIVE!",
+    number: 4,
+    name: "#4 It's ALIVE!",
     instructions: [
       "I bet they're getting restless by now. Let's shake things up!",
       () => `To select a ${animal}: <span class='inline-code'>document.getElementById("name")</span>`,
@@ -183,8 +183,8 @@ const challenges = [
     ]
   },
   {
-    number: 4,
-    name: "#4 Introducing Borders",
+    number: 5,
+    name: "#5 Introducing Borders",
     instructions: [
       "Now that they're moving around, we should probably make sure they don't run away! Let's remodel the room while they're gone.",
       "Try changing the <span class='inline-code'>style</span>, <span class='inline-code'>size</span>, and <span class='inline-code'>color</span> of the border until you find something you like. Border styles:",
@@ -216,8 +216,8 @@ const challenges = [
     ],
   },
   {
-    number: 5,
-    name: "#5 A Change of Scenery",
+    number: 6,
+    name: "#6 A Change of Scenery",
     instructions: [
       "There's other things we can do with style tags. You're probably getting tired of that background by now... What about we use a picture instead?",
       "<img src='assets/terrain.jpg'>",
@@ -250,8 +250,8 @@ const challenges = [
     ],
   },
   {
-    number: 6,
-    name: "#6 Making Signs",
+    number: 7,
+    name: "#7 Making Signs",
     // introduce html element, maybe just <h1></h1>, font-size, color, background-color
     instructions: [
       "Hey, it's starting to look pretty spiffy. I think we 'ought to hang up a sign somewhere, so that people can find this place.",
@@ -287,8 +287,8 @@ const challenges = [
     ],
   },
   {
-    number: 7,
-    name: "#7 Let's Add Knickknacks",
+    number: 8,
+    name: "#8 Let's Add Knickknacks",
     instructions: [
       () => `Since it's almost the holiday season I think we should decorate the place. Let's add some presents for <b>${name1}</b> and <b>${name2}</b> so that they'll come back faster!`,
       "<img src='assets/presents.jpg' style='margin: -15px 0 -10px 0;'>",
@@ -339,39 +339,133 @@ const challenges = [
             }
         },
       message: "You need at least 2 unique id's.\nEvery present should have a different id."
+    }, {
+      test: () => presents.length === ids.length,
+      message: "The number of presents is not the same as the number of unique IDs."
     }],
     callbacks: []
   },
   {
-    number: 8,
-    name: "#8 Push 'n' Pull",
+    number: 9,
+    name: "#9 Push 'n' Pull",
     instructions: [
       "It's boring having everything lumped up in the center like that. Let's reposition the decorations.",
-      // absolute positioning, let them use top: left, etc. using id selectors
+      `Now this is where the IDs become important. We're going to use them to move the presents around.`,
+      `You can add  <code class='inline-code'>top</code>, <code class='inline-code'>bottom</code>, <code class='inline-code'>left</code>, or <code class='inline-code'>right</code> properties.`,
+      `For example:`,
+      `<pre class='codeblock'>#id {
+          top: 50px;
+          right: 20%;
+      }</pre>`
     ],
     seed: {
-      code: [
-      ],
-      hiddenLines: [
-      ]
+      code: ()  => {
+            var p = presents, id = ids;
+            var result = [`<style>`, ""];
+            for (var i = 0; i < id.length; i++) {
+                result.push(`#${id[i]} {`, "", `}`, "")
+            }
+            result.push("</style>", '',
+            `<style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      height: 97%;
+      box-sizing: border-box;
+      background-image: ${bg};
+      background-size: cover;
+      border: ${borderStyle[1]} ${borderStyle[0]} ${borderStyle[2]};
+    }
+    img {
+      position: absolute;
+    }
+  </style>`,
+            `
+<h1>${title[0]}</h1>
+
+<style>
+  h1 {
+    font-size: ${title[1]};
+    background-color: ${title[2]};
+    color: ${title[3]};
+    font-family: arial, sans-serif;
+    font-weight: bold;
+    z-index: 3;
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 20px;
+  }
+
+  .animated {
+    width: 150px;
+    height: 150px;
+  }
+
+  p {
+     font-size: 20px;
+     font-family: arial;
+     font-weight: bold;
+     text-align: center;
+     margin: 0;
+   }
+</style>
+`);
+      for (var i = 0; i < p.length; i++) {
+          result.push(`<img src="${p[i]}" id="${id[i]}">`);
+      }
+      result.push('', `<img src='assets/p1.png' id='ref' style='opacity:0'>`);
+      return result;
+      },
+      hiddenLines: () => [{start: (presents.length * 5), end: 500}]
     },
-    tests: []
+    tests: [{
+      test: () => {
+        var top = false, bot = false, left = false, right = false;
+        var topref = $("iframe").contents().find(`#ref`).css("top");
+        var botref = $("iframe").contents().find(`#ref`).css("bottom");
+        var leftref = $("iframe").contents().find(`#ref`).css("left");
+        var rightref = $("iframe").contents().find(`#ref`).css("right");
+        var pass = true;
+        for (var i = 0; i < presents.length; i++) {
+          top = $("iframe").contents().find(`#${ids[i]}`).css("top");
+          bot = $("iframe").contents().find(`#${ids[i]}`).css("bottom");
+          left = $("iframe").contents().find(`#${ids[i]}`).css("left");
+          right = $("iframe").contents().find(`#${ids[i]}`).css("right");
+          if ((top === topref) && (bot === botref) && (left === leftref) && (right === rightref)) {
+            pass = false;
+          }
+       }
+       return pass;
+      },
+      message: "Try moving each present box with top, bottom, left, or right."
+    }, ],
+    callbacks: [
+      () => ed = $('.CodeMirror')[0].CodeMirror.getValue()
+    ],
   },
   {
-    number: 9,
-    name: "#9 HTML Animals",
+    number: 10,
+    name: "#10 The Grand Unveiling",
     instructions: [
-      "OK, I think we're ready to let the animals back in.",
-      // Use img to create the elements
-      // Use jQuery to select/give them animations
+      "Look who's back! I guess the presents did work as a lure. I think we're done the remodeling, but that doesn't mean your adventure has to end here.",
+      "There are lots of resources about HTML tags and CSS styling if you found this activity fun, like at FreeCodeCamp, Codecademy, and Khan Academy.",
+      "",
+      `Feel free to play around with the editor/preview below. Just make sure to keep CSS between <code class="inline-code">style</code> tags and Javascript between <code class="inline-code">script</code> tags.`
     ],
     seed: {
       code: [
+        `<style>${animatecss}</style>`,
+        () => `<div><p>${name1}</p><img id="${name1}" src="assets/${animal}.svg" style="position: static;" class="${ani1}"></div>`,
+        () => `<div><p>${name2}</p><img id="${name2}" src="assets/${animal}.svg" style="position: static;" class="${ani2}"></div>`,
+        () => ed
       ],
-      hiddenLines: [
+      hiddenLines: [{start: -1, end: 670}
       ]
     },
-    tests: []
   }
   // so on ...
 ];

@@ -14,7 +14,9 @@ var borderStyle = [];
 const animationList = ["bounce", "flash", "pulse", "rubberBand", "shake", "headShake", "swing", "tada", "wobble", "jello"];
 var iFrame = {};
 var delay = 0;
-var currentChallenge = 0;
+var currentChallenge = 1;
+const lastChallenge = 10;
+var ed = "";
 
 function clear() {
   animal = "";
@@ -27,10 +29,13 @@ function clear() {
   ids = [];
   presents = [];
   bg = "";
+  ed = "";
   iFrame = {};
   delay = 0;
-  currentChallenge = 0;
+  currentChallenge = 1;
   borderStyle = [];
+  $("#check-button").show();
+  $("#reset-button").show();
 }
 
 $(() => {
@@ -66,6 +71,9 @@ $('#linkback').click(e => {
 
 function setupEditor(challenge) {
  var editorVal = '';
+ if (typeof challenge.seed.code === "function") {
+   challenge.seed.code = challenge.seed.code();
+ }
  for (var i = 0; i < challenge.seed.code.length; i++) {
    editorVal += (typeof challenge.seed.code[i] === "function") ? challenge.seed.code[i]() : challenge.seed.code[i];
    if (!(i === challenge.seed.code.length - 1)) {
@@ -73,6 +81,9 @@ function setupEditor(challenge) {
    }
  }
  editor.setValue(editorVal);
+ if (typeof challenge.seed.hiddenLines === "function") {
+   challenge.seed.hiddenLines = challenge.seed.hiddenLines();
+ }
  for (var j = 0; j < challenge.seed.hiddenLines.length; j++) {
    var range = challenge.seed.hiddenLines[j];
    editor.markText({line: range.start}, {line: range.end}, {inclusiveRight: true, inclusiveLeft: true, collapsed: true});
@@ -121,7 +132,10 @@ editor.on("change", function() {
 });
 
 nextChallenge.onclick = function() {
-  currentChallenge++;
+  if (++currentChallenge === lastChallenge) {
+    $("#check-button").hide();
+    $("#reset-button").hide();
+  }
   constructPage(currentChallenge);
 }
 
@@ -135,7 +149,7 @@ resetBtn.onclick = function() {
 
 function displayResults(testMsgs) {
  if (testMsgs.length === 0) {
-   challenges[currentChallenge].callbacks.forEach(func => {
+   challenges[currentChallenge - 1].callbacks.forEach(func => {
      func();
    });
    successMsg.className = '';
@@ -161,6 +175,7 @@ function runChallengeTests(challengeNumber) {
   }
   var challenge = _.find(challenges, c => c.number === challengeNumber);
   var testMsgs = [];
+
   for (var i = 0; i < challenge.tests.length; i++) {
     var testObj = challenge.tests[i];
     //console.log($('#preview').contents().find('#img-cont')[0].src);

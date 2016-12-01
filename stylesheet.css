@@ -129,6 +129,7 @@ h2 {
   border: 1px solid gray;
   height: 99.9%;
   flex-grow: 1;
+  max-height: 450px;
 }
 
 .codeblock {
