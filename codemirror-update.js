@@ -4,6 +4,7 @@ var animal = "";
 var color = "";
 var name1 = "";
 var name2 = "";
+var iFrame = {};
 var delay = 0;
 var currentChallenge = 0;
 

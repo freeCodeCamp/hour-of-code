@@ -1,4 +1,4 @@
-/* global animal color $*/
+/* global animal color name1 name2 iFrame $*/
 
 
 const challenges = [
@@ -79,26 +79,55 @@ const challenges = [
       test: "$('#preview').contents().find('img').length > 1",
       message: "It looks like your animal is still alone.\nDid you try modifying the number next to the while loop?"
     }],
-    callbacks: [
-
-    ]
+    callbacks: []
   },
   {
     number: 2,
     name: "#2 Names for Everyone",
     instructions: [
       () => `You know, it's a bit boring calling this guy "${animal}".\nWe wouldn't be able to tell who was who in that last challenge.`,
-      "How about we give him a <i>name</i>? We can create variables that hold information like this:",
-      // TODO code demo
-      () => `Let's try and name two ${animal}s.`
+      "How about we give him a <i>name</i> ? We can create variables that hold information like this:",
+      `<pre class='codeblock'>
+      var name = "value";</pre>`,
+      "Now whenever we access <span class='inline-code'>name</span> we get <span class='inline-code'>\"value\"</span>.",
+      () => `When we want to change the name we change what's inside the quotes. Let's try and name two ${animal}s.`
     ],
     seed: {
-      code: [],
-      hiddenLines: []
+      code: [
+        // div must be put before JS or the DOM won't be available to manipulate
+        () => `<body class='${color}'>
+          <div><p id="name1"></p><img src="assets/${animal}.svg"></div>
+          <div><p id="name2"></p><img src="assets/${animal}.svg"></div>`,
+        `<script>`,
+        `// Remember to add a ; to the end of each line`,
+        `var name1 = `,
+        `var name2 = `,
+        "",
+        `if (name1) { document.getElementById("name1").textContent = name1 }; if (name2) { document.getElementById("name2").textContent = name2 }; parent.iFrame = window;`,
+        `</script><style>`,
+          `body { height: 90%; display: flex; justify-content: center; align-items: center; }`,
+          `img { width: 150px; height: 150px; text-align: center;}`,
+          `p { font-size: 20px; font-family: arial; font-weight: bold; text-align: center; margin: 0; }`,
+          `.red { background-color: palevioletred; }
+          .green { background-color: palegreen; }
+          .blue { background-color: paleturquoise; }`,
+        `</style></body>`,
+      ],
+      hiddenLines: [{start: -1, end: 3}, {start: 7, end: 16}]
     },
-    tests: [],
+    tests: [{
+      test: "(typeof iFrame.name1 === 'string') && (typeof iFrame.name2 === 'string')",
+      message: "Did you add quotation marks around your values?"
+    }, {
+      test: "($('#preview').contents().find('#name1')[0].textContent.length > 0) && ($('#preview').contents().find('#name2')[0].textContent.length > 0)",
+      message: "Are you sure both of the animals have names?"
+    }, {
+      test: "$('#preview').contents().find('#name1')[0].textContent !== $('#preview').contents().find('#name2')[0].textContent",
+      message: "Make sure their names are unique (different from each other)."
+    }],
     callbacks: [
-      // save name one and name 2
+      () => { name1 = iFrame.name1; },
+      () => { name2 = iFrame.name2; }
     ],
   },
   {
