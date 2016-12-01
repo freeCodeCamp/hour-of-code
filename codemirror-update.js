@@ -43,7 +43,7 @@ var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
 
 // Get website URL for linkback at top
 
-var url = window.location.origin;
+var url = window.location.href;
 $('#linkback').html(`<a href="${url}">Return to Start</a>`);
 
 $('#linkback').click(e => {
