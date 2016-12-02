@@ -142,7 +142,7 @@ nextChallenge.onclick = function() {
 constructPage(currentChallenge);
 
 resetBtn.onclick = function() {
-  setupEditor(challenges[currentChallenge]);
+  setupEditor(challenges[currentChallenge - 1]);
 }
 
 // Display either a message of success or indication of error, based on test results

@@ -22,11 +22,12 @@ const challenges = [
         "function chooseColor(color) {body.className=color;}",
         "createAnimal('animal');",
         "chooseColor('color');",
+        "",
         "</script>",
         "</div>"
       ],
       hiddenLines: [
-        {start: -1, end: 6}, {start: 8, end: 12}
+        {start: -1, end: 6}, {start: 9, end: 12}
       ]
     },
     tests: [

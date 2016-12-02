@@ -11,9 +11,10 @@ html, body {
 
 hr {
     border: 0;
-    height: 1px;
+    padding-bottom: 1px;
+    height: 0px;
     width: 100%;
-    margin: 5px 0 30px 0;
+    margin: 5px 0 25px 0;
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
 
@@ -95,6 +96,7 @@ h2 {
   width: 1200px;
   justify-content: center;
   align-items: center;
+  height:100%;
 }
 
 .left {
@@ -110,18 +112,18 @@ h2 {
     flex-grow: 1;
     position: relative;
     display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 #user-input button {
-  position: absolute;
-  bottom: 0;
-  right: 0;
   margin: 0 0 -1px 0;
   border-radius: 0;
   height: 50px;
   width: 130px;
   font-size: 24px;
   z-index: 2;
+  align-self: flex-end;
 }
 
 #code, .CodeMirror {
