@@ -18,8 +18,8 @@ const challenges = [
         "<img style='width: 150px; height: 150px' id='img-cont'>",
         "<script type='text/javascript'>",
         "var img = document.getElementById('img-cont');var body = document.getElementsByTagName('body')[0];",
-        "function createAnimal(animal) {img.src = `assets/${animal.toLowerCase()}.svg`;}",
-        "function chooseColor(color) {body.className=color;}",
+        "function createAnimal(animal) {img.src = `assets/${animal.toLowerCase().trim()}.svg`;}",
+        "function chooseColor(color) {body.className=color.toLowerCase().trim();}",
         "createAnimal('animal');",
         "chooseColor('color');",
         "",
@@ -32,8 +32,8 @@ const challenges = [
     },
     tests: [
       {
-        test: "$('#preview').contents().find('#img-cont')[0].src.match('monkey') || $('#preview').contents().find('#img-cont')[0].src.match('horse') || $('#preview').contents().find('#img-cont')[0].src.match('tiger')",
-        message: "Did you change animal to either monkey, horse or tiger?"
+        test: "$('#preview').contents().find('#img-cont')[0].src.match(/monkey.svg/ig) || $('#preview').contents().find('#img-cont')[0].src.match(/horse.svg/ig) || $('#preview').contents().find('#img-cont')[0].src.match(/tiger.svg/ig)",
+        message: "Did you change animal to either monkey, horse or tiger?\nCheck that you don't have extra spaces."
       },
       {
         test: "$('#preview').contents().find('body')[0].className === 'red' || $('#preview').contents().find('body')[0].className === 'green' || $('body').className === 'green' || $('#preview').contents().find('body')[0].className === 'blue'",
@@ -50,7 +50,7 @@ const challenges = [
     name: "#2 Making Friends",
     instructions: [
       () => `Your ${animal} must be a bit lonely here! You can create more ${animal}s quickly by running a loop. This loop makes 5 animals.`,
-      "<pre class='codeblock'>var num = 1;\n\nwhile (num <= 5) {\n   createAnimal('animal');\n   num = num + 1; \n}</pre>",
+      "<pre class='codeblock'>var num = 1;\n\nwhile (num <= 5) {\n\n   createAnimal('animal');\n\n}</pre>",
       "Try playing around with <span class='inline-code'>num = 1</span> and <span class='inline-code'>num <= 5</span>!"
     ],
     seed: {
@@ -63,16 +63,17 @@ const challenges = [
         "var num = 1;",
         "",
         "while (num <= 1) {",
-        () => `  createAnimal('${animal}');`,
+        () => `
+  createAnimal('${animal}');`,
         "",
-        "// Don't touch this next line or",
-        "// you might get caught in the loop!",
         "  num = num + 1;",
+        "",
         "}",
+        "",
         "</script></body>",
       ],
       hiddenLines: [
-        {start: -1, end: 4}, {start: 13, end: 14}
+        {start: -1, end: 4}, {start: 10, end: 11 }, {start: 14, end: 17}
       ]
     },
     tests: [{
@@ -99,9 +100,11 @@ const challenges = [
           <div><p id="name1"></p><img src="assets/${animal}.svg"></div>
           <div><p id="name2"></p><img src="assets/${animal}.svg"></div>`,
         `<script>`,
-        `// Remember to add a ; to the end of each line`,
-        `var name1 = `,
-        `var name2 = `,
+        `// Remember to keep the quotes so we know its a word.
+// Just add your names between them.
+`,
+        `var name1 = "";`,
+        `var name2 = "";`,
         "",
         `if (name1) { document.getElementById("name1").textContent = name1 }; if (name2) { document.getElementById("name2").textContent = name2 }; parent.iFrame = window;`,
         `</script><style>`,
@@ -113,7 +116,7 @@ const challenges = [
           .blue { background-color: paleturquoise; }`,
         `</style></body>`,
       ],
-      hiddenLines: [{start: -1, end: 3}, {start: 7, end: 16}]
+      hiddenLines: [{start: -1, end: 3}, {start: 9, end: 30}]
     },
     tests: [{
       test: "(typeof iFrame.name1 === 'string') && (typeof iFrame.name2 === 'string')",
@@ -136,8 +139,8 @@ const challenges = [
     instructions: [
       "I bet they're getting restless by now. Let's shake things up!",
       () => `To select a ${animal}: <span class='inline-code'>document.getElementById("name")</span>`,
-      `And make it move: <span class="inline-code">.className += "x";</span>`,
-      `Replace <span class="inline-code">x</span> with which animation you want.`,
+      `To make it move, append <span class="inline-code">.animate("animation");</span>`,
+      `Replace <span class="inline-code">animation</span> with which animation you want.`,
       `Here's a list of animations that work:`,
       `<span class="inline-code">bounce flash pulse rubberBand shake headShake swing tada wobble jello</span>`,
       () => `Try to get both <b>${name1}</b> and <b>${name2}</b> moving!`
@@ -146,13 +149,16 @@ const challenges = [
       code: [
         () => `<body class='${color}'>
           <div><p>${name1}</p><img id="${name1}" src="assets/${animal}.svg" class="animated infinite "></div>
-          <div><p>${name2}</p><img id="${name2}" src="assets/${animal}.svg" class="animated infinite "></div><script>var name1 = "${name1}"; var name2 = "${name2}";`,
+          <div><p>${name2}</p><img id="${name2}" src="assets/${animal}.svg" class="animated infinite "></div><script>var name1 = "${name1}"; var name2 = "${name2}";
+            Element.prototype.animate = function(k) {
+this.className += k.toLowerCase().trim();
+}`,
           "// Remember to change NAME.",
           "// You can write out the name or use the",
           "// variables name1 and name2 (& delete the quotes).",
           "",
-          `document.getElementById("NAME").className += "ANIMATION";`,
-          `document.getElementById("NAME").className += "ANIMATION";`,
+          `document.getElementById("NAME").animate("ANIMATION");`,
+          `document.getElementById("NAME").animate("ANIMATION");`,
           "",
           "",
         `</script><style>`,
@@ -166,7 +172,7 @@ const challenges = [
         `</style></body>`,
       ],
       hiddenLines: [
-        {start: -1, end: 2}, {start: 10, end: 1000}
+        {start: -1, end: 5}, {start: 13, end: 1000}
       ]
     },
     tests: [{
@@ -175,8 +181,8 @@ const challenges = [
     }, {
       test: () => $('#preview').contents().find(`#${name1}`)[0].className.match(/animated infinite (\w+)/)
       && $('#preview').contents().find(`#${name2}`)[0].className.match(/animated infinite (\w+)/)
-      && animationList.includes($(`#preview`).contents().find(`#${name1}`)[0].className.match(/animated infinite (\w+)/)[1])
-      && animationList.includes($(`#preview`).contents().find(`#${name2}`)[0].className.match(/animated infinite (\w+)/)[1]),
+      && animationList.includes($(`#preview`).contents().find(`#${name1}`)[0].className.match(/animated infinite (\w+)/)[1].toLowerCase().trim())
+      && animationList.includes($(`#preview`).contents().find(`#${name2}`)[0].className.match(/animated infinite (\w+)/)[1].toLowerCase().trim()),
       message: 'Did you use the listed animations?'
     }],
     callbacks: [
@@ -189,7 +195,8 @@ const challenges = [
     instructions: [
       "Now that they're moving around, we should probably make sure they don't run away! Let's remodel the room while they're gone.",
       "Try changing the <span class='inline-code'>style</span>, <span class='inline-code'>size</span>, and <span class='inline-code'>color</span> of the border until you find something you like. Border styles:",
-      "<img src='http://www.vanseodesign.com/blog/wp-content/uploads/2011/10/border-styles.png'>"
+      "<img src='http://www.vanseodesign.com/blog/wp-content/uploads/2011/10/border-styles.png'>",
+      "TIP: px stands for pixels which is a measurement of width, so make sure to keep that when setting border-width."
     ],
     seed: {
       code: [
@@ -230,7 +237,7 @@ const challenges = [
       code: [
         `<style>`,
           `  body {`,
-            `    background-image: `,
+            `    background-image: url('assets/IMAGE.jpg');`,
           `  }`,
         `</style>`,
         "",
@@ -257,7 +264,7 @@ const challenges = [
     instructions: [
       "Hey, it's starting to look pretty spiffy. I think we 'ought to hang up a sign somewhere, so that people can find this place.",
       "Let's create a header element. Whatever you type in between the <code class='inline-code'>h1</code> tags will show up as the title.",
-      "I've added a few more style settings for you to customize, so make sure to fill those in. Remember to add a <code class='inline-code'>;</code> at the end of each line."
+      "I've added a few more style settings for you to customize, so make sure to fill those in. Remember that <code class='inline-code'>px</code> is a unit of width, so you should keep that with your font-size."
     ],
     seed: {
       code: [
@@ -267,7 +274,7 @@ const challenges = [
           `  h1 {`,
             () => `    background-color: ${color};`,
             `    font-size: 0px;`,
-            `    color: black`,
+            `    color: black;`,
           `  }`,
         `</style>`,
         "",

@@ -149,7 +149,7 @@ const animatecss = `@charset "UTF-8";
   animation-name: pulse;
 }
 
-@-webkit-keyframes rubberBand {
+@-webkit-keyframes rubberband {
   from {
     -webkit-transform: scale3d(1, 1, 1);
     transform: scale3d(1, 1, 1);
@@ -186,7 +186,7 @@ const animatecss = `@charset "UTF-8";
   }
 }
 
-@keyframes rubberBand {
+@keyframes rubberband {
   from {
     -webkit-transform: scale3d(1, 1, 1);
     transform: scale3d(1, 1, 1);
@@ -223,9 +223,9 @@ const animatecss = `@charset "UTF-8";
   }
 }
 
-.rubberBand {
-  -webkit-animation-name: rubberBand;
-  animation-name: rubberBand;
+.rubberband {
+  -webkit-animation-name: rubberband;
+  animation-name: rubberband;
 }
 
 @-webkit-keyframes shake {
@@ -267,7 +267,7 @@ const animatecss = `@charset "UTF-8";
   animation-name: shake;
 }
 
-@-webkit-keyframes headShake {
+@-webkit-keyframes headshake {
   0% {
     -webkit-transform: translateX(0);
     transform: translateX(0);
@@ -299,7 +299,7 @@ const animatecss = `@charset "UTF-8";
   }
 }
 
-@keyframes headShake {
+@keyframes headshake {
   0% {
     -webkit-transform: translateX(0);
     transform: translateX(0);
@@ -331,11 +331,11 @@ const animatecss = `@charset "UTF-8";
   }
 }
 
-.headShake {
+.headshake {
   -webkit-animation-timing-function: ease-in-out;
   animation-timing-function: ease-in-out;
-  -webkit-animation-name: headShake;
-  animation-name: headShake;
+  -webkit-animation-name: headshake;
+  animation-name: headshake;
 }
 
 @-webkit-keyframes swing {
