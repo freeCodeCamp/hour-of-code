@@ -51,7 +51,7 @@ const challenges = [
     instructions: [
       () => `Your ${animal} must be a bit lonely here! You can create more ${animal}s quickly by running a loop. This loop makes 5 animals.`,
       "<pre class='codeblock'>var num = 1;\n\nwhile (num <= 5) {\n\n   createAnimal('animal');\n\n}</pre>",
-      "Try playing around with <span class='inline-code'>num = 1</span> and <span class='inline-code'>num <= 5</span>!"
+      "Try playing around with <span class='inline-code'>num = 1</span> and <span class='inline-code'>(num <= 1)</span>!"
     ],
     seed: {
       code: [
@@ -196,7 +196,7 @@ this.className += k.toLowerCase().trim();
       "Now that they're moving around, we should probably make sure they don't run away! Let's remodel the room while they're gone.",
       "Try changing the <span class='inline-code'>style</span>, <span class='inline-code'>size</span>, and <span class='inline-code'>color</span> of the border until you find something you like. Border styles:",
       "<img src='http://www.vanseodesign.com/blog/wp-content/uploads/2011/10/border-styles.png'>",
-      "TIP: px stands for pixels which is a measurement of width, so make sure to keep that when setting border-width."
+      "TIP: <span class='inline-code'>px</span> stands for <span class='inline-code'>pixels</span> which is a measurement of width, so make sure to keep that when setting border-width."
     ],
     seed: {
       code: [
@@ -229,25 +229,27 @@ this.className += k.toLowerCase().trim();
     instructions: [
       "There's other things we can do with style tags. You're probably getting tired of that background by now... What about we use a picture instead?",
       "<img src='assets/terrain.jpg'>",
-      "To change the background image,  we can use",
+      "To change the background image, we can use",
       "<pre class='codeblock'>background-image: url('assets/IMAGE.jpg');</pre>",
       () => `Replace <span class='inline-code'>IMAGE</span> with a type of flooring your ${animal}s would like!`
     ],
     seed: {
       code: [
         `<style>`,
-          `  body {`,
+          `  body {
+            `,
             `    background-image: url('assets/IMAGE.jpg');`,
-          `  }`,
+          `
+  }`,
         `</style>`,
         "",
-        () => `<style>body { height: 97%; box-sizing: border-box; background-size: cover; border: ${borderStyle[1]} ${borderStyle[0]} ${borderStyle[2]};}</style>`
+        () => `<style>body { height: 97%; box-sizing: border-box; background-size: cover; border: ${borderStyle[1]} ${borderStyle[0]} ${borderStyle[2]};}</style>`,
       ],
-      hiddenLines: [{start: 5, end: 7}]
+      hiddenLines: [{start: 7, end: 15}]
     },
     tests: [{
       test: () => {
-        const url = $("iframe").contents().find("body").css("background-image").slice(-18);
+        const url = $("iframe").contents().find("body").css("background-image").slice(-18).toLowerCase().trim();
         return (url === '/assets/dirt.jpg")') || (url === 'assets/grass.jpg")') || (url === 'assets/stone.jpg")');
       },
       message: "Did you replace IMAGE with one of the three types: dirt, grass, or stone?\nRemember to use the format in the instructions: url('assets/IMAGE.jpg');"
@@ -309,7 +311,7 @@ this.className += k.toLowerCase().trim();
         `     Try to finish at least 2 presents! -->`,
         "",
           `<img src='assets/P0.png' id='present1'>`,
-          `<img src=...>`,
+          `<img src='assets/P0.png' id='present1'>`,
             "",
         () => `<style>body { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; height: 97%; box-sizing: border-box; background-image: ${bg}; background-size: cover; border: ${borderStyle[1]} ${borderStyle[0]} ${borderStyle[2]};}</style>`,
         () => `<h1>${title[0]}</h1><style>h1 { font-size: ${title[1]}; background-color: ${title[2]}; color: ${title[3]}; font-family: arial, sans-serif; font-weight: bold; z-index: 3; position: absolute; top: 50px; left: 50%; transform: translateX(-50%); padding: 20px; }</style>`
@@ -362,9 +364,10 @@ this.className += k.toLowerCase().trim();
       `You can add  <code class='inline-code'>top</code>, <code class='inline-code'>bottom</code>, <code class='inline-code'>left</code>, or <code class='inline-code'>right</code> properties.`,
       `For example:`,
       `<pre class='codeblock'>#id {
-          top: 50px;
-          right: 20%;
-      }</pre>`
+            top: 50px;
+            right: 20%;
+      }</pre>
+      Remember that you can use px as units.`
     ],
     seed: {
       code: ()  => {
@@ -467,8 +470,23 @@ this.className += k.toLowerCase().trim();
     seed: {
       code: [
         `<style>${animatecss}</style>`,
-        () => `<div><p>${name1}</p><img id="${name1}" src="assets/${animal}.svg" style="position: static;" class="${ani1}"></div>`,
-        () => `<div><p>${name2}</p><img id="${name2}" src="assets/${animal}.svg" style="position: static;" class="${ani2}"></div>`,
+        () => `
+<div style="position: absolute; left: 50%;
+            transform: translate(-100%, -25%);">
+  <p>${name1}</p>
+  <img id="${name1}" src="assets/${animal}.svg"
+       style="position: static;"
+       class="${ani1}">
+ </div>`,
+        () => `
+<div style="position: absolute; left: 50%;
+            transform: translate(0, -25%);">
+  <p>${name2}</p>
+  <img id="${name2}" src="assets/${animal}.svg"
+       style="position: static;"
+       class="${ani2}">
+</div>
+        `,
         () => ed
       ],
       hiddenLines: [{start: -1, end: 670}

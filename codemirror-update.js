@@ -35,7 +35,6 @@ function clear() {
   currentChallenge = 1;
   borderStyle = [];
   $("#check-button").show();
-  $("#reset-button").show();
 }
 
 $(() => {
@@ -134,7 +133,6 @@ editor.on("change", function() {
 nextChallenge.onclick = function() {
   if (++currentChallenge === lastChallenge) {
     $("#check-button").hide();
-    $("#reset-button").hide();
   }
   constructPage(currentChallenge);
 }
