@@ -15,7 +15,7 @@ const challenges = [
       code: [
         "<div id='preview-container'>",
         "<link rel='stylesheet' href='preview-style.css'>",
-        "<img style='width: 150px; height: 150px' id='img-cont'>",
+        "<img style='width: 150px; height: 150px' id='img-cont' onerror='this.src=`assets/err.png`'>",
         "<script type='text/javascript'>",
         "var img = document.getElementById('img-cont');var body = document.getElementsByTagName('body')[0];",
         "function createAnimal(animal) {img.src = `assets/${animal.toLowerCase().trim()}.svg`;}",
@@ -27,7 +27,7 @@ const challenges = [
         "</div>"
       ],
       hiddenLines: [
-        {start: -1, end: 6}, {start: 9, end: 12}
+        {start: -1, end: 6}, {start: 9, end: 20}
       ]
     },
     tests: [
@@ -193,10 +193,9 @@ this.className += k.toLowerCase().trim();
     number: 5,
     name: "#5 Introducing Borders",
     instructions: [
-      "Now that they're moving around, we should probably make sure they don't run away! Let's remodel the room while they're gone.",
-      "Try changing the <span class='inline-code'>style</span>, <span class='inline-code'>size</span>, and <span class='inline-code'>color</span> of the border until you find something you like. Border styles:",
-      "<img src='http://www.vanseodesign.com/blog/wp-content/uploads/2011/10/border-styles.png'>",
-      "TIP: <span class='inline-code'>px</span> stands for <span class='inline-code'>pixels</span> which is a measurement of width, so make sure to keep that when setting border-width."
+      "Now that they're moving around, we should probably make sure they don't run away! Try changing the <span class='inline-code'>style</span>, <span class='inline-code'>size</span>, and <span class='inline-code'>color</span> of the border until you find something you like. Border styles:",
+      "<img src='http://www.vanseodesign.com/blog/wp-content/uploads/2011/10/border-styles.png' style='height: 250px;'>",
+      "TIP: <span class='inline-code'>px</span> stands for <span class='inline-code'>pixels</span> which is a measurement of width."
     ],
     seed: {
       code: [
@@ -228,7 +227,7 @@ this.className += k.toLowerCase().trim();
     name: "#6 A Change of Scenery",
     instructions: [
       "There's other things we can do with style tags. You're probably getting tired of that background by now... What about we use a picture instead?",
-      "<img src='assets/terrain.jpg'>",
+      "<img src='assets/terrain.jpg' style='height: 150px;'>",
       "To change the background image, we can use",
       "<pre class='codeblock'>background-image: url('assets/IMAGE.jpg');</pre>",
       () => `Replace <span class='inline-code'>IMAGE</span> with a type of flooring your ${animal}s would like!`
@@ -300,8 +299,8 @@ this.className += k.toLowerCase().trim();
     number: 8,
     name: "#8 Let's Add Knickknacks",
     instructions: [
-      () => `Since it's almost the holiday season I think we should decorate the place. Let's add some presents for <b>${name1}</b> and <b>${name2}</b> so that they'll come back faster!`,
-      "<img src='assets/presents.jpg' style='margin: -15px 0 -10px 0;'>",
+      () => `Since it's almost the holiday season I think we should decorate the place.`,
+      "<img src='assets/presents.jpg' style='margin: -15px 0 -10px 0; height: 300px;'>",
       `Time to use <code class='inline-code'>img</code> tags. Just like earlier, change the code right before <code class='inline-code'>.png</code> to select your present type.
       This time we also have to give them <code class='inline-code'>id</code>s.`
     ],
@@ -310,13 +309,15 @@ this.className += k.toLowerCase().trim();
         `<!-- No two IDs should be the same`,
         `     Try to finish at least 2 presents! -->`,
         "",
-          `<img src='assets/P0.png' id='present1'>`,
-          `<img src='assets/P0.png' id='present1'>`,
+          `<img src='assets/p0.png' id='present1'
+                     onerror='this.src="assets/err.png"'>`,
+          `<img src='assets/p0.png' id='present1'
+                     onerror='this.src="assets/err.png"'>`,
             "",
-        () => `<style>body { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; height: 97%; box-sizing: border-box; background-image: ${bg}; background-size: cover; border: ${borderStyle[1]} ${borderStyle[0]} ${borderStyle[2]};}</style>`,
+        () => `<style>img { height: 100px; } body { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; height: 97%; box-sizing: border-box; background-image: ${bg}; background-size: cover; border: ${borderStyle[1]} ${borderStyle[0]} ${borderStyle[2]};}</style>`,
         () => `<h1>${title[0]}</h1><style>h1 { font-size: ${title[1]}; background-color: ${title[2]}; color: ${title[3]}; font-family: arial, sans-serif; font-weight: bold; z-index: 3; position: absolute; top: 50px; left: 50%; transform: translateX(-50%); padding: 20px; }</style>`
       ],
-      hiddenLines: [{start: 5, end: 8}]
+      hiddenLines: [{start: 7, end: 20}]
     },
     tests: [{
       test: () => {
@@ -391,6 +392,7 @@ this.className += k.toLowerCase().trim();
     }
     img {
       position: absolute;
+      height: 100px;
     }
   </style>`,
             `
@@ -426,7 +428,7 @@ this.className += k.toLowerCase().trim();
 </style>
 `);
       for (var i = 0; i < p.length; i++) {
-          result.push(`<img src="${p[i]}" id="${id[i]}">`);
+          result.push(`<img src="${p[i]}" id="${id[i]}" onerror='this.src="assets/err.png"'>`);
       }
       result.push('', `<img src='assets/p1.png' id='ref' style='opacity:0'>`);
       return result;
@@ -475,7 +477,7 @@ this.className += k.toLowerCase().trim();
             transform: translate(-100%, -25%);">
   <p>${name1}</p>
   <img id="${name1}" src="assets/${animal}.svg"
-       style="position: static;"
+       style="position: static; height: 150px;"
        class="${ani1}">
  </div>`,
         () => `
@@ -483,7 +485,7 @@ this.className += k.toLowerCase().trim();
             transform: translate(0, -25%);">
   <p>${name2}</p>
   <img id="${name2}" src="assets/${animal}.svg"
-       style="position: static;"
+       style="position: static; height: 150px;"
        class="${ani2}">
 </div>
         `,
