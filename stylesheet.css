@@ -90,7 +90,7 @@ h2 {
 
 .container {
   margin: auto;
-  margin-top: -50px;
+  // margin-top: -50px;
   min-width: 900px;
   box-sizing: content-box;
   padding: 20px;
@@ -99,8 +99,8 @@ h2 {
   max-width: 90vw;
   width: 1200px;
   justify-content: center;
-  align-items: center;
-  height:100%;
+  // align-items: center;
+  // height:100%;
 }
 
 .left {
