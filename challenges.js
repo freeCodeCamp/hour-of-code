@@ -465,7 +465,7 @@ this.className += k.toLowerCase().trim();
     name: "#10 The Grand Unveiling",
     instructions: [
       "Look who's back! I guess the presents did work as a lure. I think we're done the remodeling, but that doesn't mean your adventure has to end here.",
-      "There are lots of resources about HTML tags and CSS styling if you found this activity fun, like at FreeCodeCamp, Codecademy, and Khan Academy.",
+      "There are lots of resources about HTML tags and CSS styling if you found this activity fun, like at <a href='https://freecodecamp.com' target='_blank'>Free Code Camp</a> and <a href='http://khanacademy.org' target='_blank'>Khan Academy</a>.",
       "",
       `Feel free to play around with the editor/preview below. Just make sure to keep CSS between <code class="inline-code">style</code> tags and Javascript between <code class="inline-code">script</code> tags.`
     ],
