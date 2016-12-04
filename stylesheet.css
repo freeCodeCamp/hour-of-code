@@ -124,7 +124,7 @@ h2 {
 #user-input button {
   margin: 0 0 -1px 0;
   border-radius: 0;
-  height: 50px;
+  min-height: 50px;
   width: 130px;
   font-size: 24px;
   z-index: 2;
