@@ -226,25 +226,20 @@ this.className += k.toLowerCase().trim();
     number: 6,
     name: "#6 A Change of Scenery",
     instructions: [
-      "There's other things we can do with style tags. You're probably getting tired of that background by now... What about we use a picture instead?",
+      "You're probably getting tired of that background by now... How about we use a picture instead?",
       "<img src='assets/terrain.jpg' style='height: 150px;'>",
-      "To change the background image, we can use",
-      "<pre class='codeblock'>background-image: url('assets/IMAGE.jpg');</pre>",
       () => `Replace <span class='inline-code'>IMAGE</span> with a type of flooring your ${animal}s would like!`
     ],
     seed: {
       code: [
-        `<style>`,
-          `  body {
-            `,
-            `    background-image: url('assets/IMAGE.jpg');`,
-          `
-  }`,
-        `</style>`,
-        "",
+        "<body id='background'></body>",
+        "<script>",
+        "Element.prototype.setImage = function(k) {this.style.backgroundImage = 'url(assets/' + k.toLowerCase() + '.jpg)';}",
+        "document.getElementById('background').setImage('IMAGE');",
+        "</script>",
         () => `<style>body { height: 97%; box-sizing: border-box; background-size: cover; border: ${borderStyle[1]} ${borderStyle[0]} ${borderStyle[2]};}</style>`,
       ],
-      hiddenLines: [{start: 7, end: 15}]
+      hiddenLines: [{start: -1, end: 2}, {start: 3, end: 5}]
     },
     tests: [{
       test: () => {
